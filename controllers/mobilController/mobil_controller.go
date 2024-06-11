@@ -1,4 +1,4 @@
-package productController
+package mobilController
 
 import (
 	"encoding/json"
@@ -11,19 +11,19 @@ import (
 
 func Index(c *gin.Context) {
 
-	var products []models.Product
+	var mobil []models.Mobil
 
-	models.DB.Find(&products)
-	c.JSON(http.StatusOK, gin.H{"products": products})
+	models.DB.Find(&mobil)
+	c.JSON(http.StatusOK, gin.H{"Mobil": mobil})
 
 }
 
 func Show(c *gin.Context) {
 
-	var product models.Product
+	var mobil models.Mobil
 	id := c.Param("id")
 
-	if err := models.DB.First(&product, id).Error; err != nil {
+	if err := models.DB.First(&mobil, id).Error; err != nil {
 		switch err {
 		case gorm.ErrRecordNotFound:
 			c.AbortWithStatusJSON(http.StatusNotFound, gin.H{"message": "Data tidak ditemukan"})
@@ -33,40 +33,40 @@ func Show(c *gin.Context) {
 			return
 		}
 	}
-	c.JSON(http.StatusOK, gin.H{"product": product})
+	c.JSON(http.StatusOK, gin.H{"mobil": mobil})
 
 }
 
 func Create(c *gin.Context) {
 
-	var product models.Product
+	var mobil models.Mobil
 
-	if err := c.ShouldBindJSON(&product); err != nil {
+	if err := c.ShouldBindJSON(&mobil); err != nil {
 
 		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"message": err.Error()})
 		return
 
 	}
 
-	models.DB.Create(&product)
-	c.JSON(http.StatusOK, gin.H{"product": product})
+	models.DB.Create(&mobil)
+	c.JSON(http.StatusOK, gin.H{"mobil": mobil})
 
 }
 
 func Update(c *gin.Context) {
 
-	var product models.Product
+	var mobil models.Mobil
 
 	id := c.Param("id")
 
-	if err := c.ShouldBindJSON(&product); err != nil {
+	if err := c.ShouldBindJSON(&mobil); err != nil {
 		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"message": err.Error()})
 		return
 
 	}
 
-	if models.DB.Model(&product).Where("id = ?", id).Updates(&product).RowsAffected == 0 {
-		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"message": "Tidak dapat mengupdate product"})
+	if models.DB.Model(&mobil).Where("id = ?", id).Updates(&mobil).RowsAffected == 0 {
+		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"message": "Tidak dapat mengupdate mobil"})
 		return
 	}
 
@@ -75,12 +75,12 @@ func Update(c *gin.Context) {
 
 func Delete(c *gin.Context) {
 
-	var product models.Product
+	var mobil models.Mobil
 
 	var input struct {
 		Id json.Number
 	}
-	
+
 	if err := c.ShouldBindJSON(&input); err != nil {
 		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"message": err.Error()})
 		return
@@ -88,8 +88,8 @@ func Delete(c *gin.Context) {
 	}
 
 	id, _ := input.Id.Int64()
-	if models.DB.Delete(&product, id).RowsAffected == 0 {
-		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"message": "Product yang ingin dihapus tidak ditemukan"})
+	if models.DB.Delete(&mobil, id).RowsAffected == 0 {
+		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"message": "Mobil yang ingin dihapus tidak ditemukan"})
 		return
 
 	}

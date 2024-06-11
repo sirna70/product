@@ -18,6 +18,7 @@ func ConnectDatabase() {
 		log.Fatalf("failed to connect to database, got error %v", err)
 	}
 
-	database.AutoMigrate(&Product{})
+	database.AutoMigrate(&Mobil{})
+	database.AutoMigrate(&Wisata{})
 	DB = database
 }
