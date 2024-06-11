@@ -1,5 +1,6 @@
 Project ini memiliki tujuan untuk membuat sebuah website informasi yang memberikan pelayanan wisata dan transportasi rental 
 dan sedang dilakukan secara bertahap :
+  
   Tahap 1 :
    - Pembuatan API untuk sisi backend menggunakan golang(framework gin & gorm)
    - Pembuatan Login dan Logout
